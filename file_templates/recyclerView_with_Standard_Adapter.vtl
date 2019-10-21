@@ -1,0 +1,46 @@
+#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+
+/**
+ * A standard [RecyclerView] adapter file.
+ * 
+ * @author ${USER}
+ * @since ${DATE}
+ */
+class ${NAME}(private val itemList: Collection<${Item_type}>) : RecyclerView.Adapter<${NAME}.${ViewHolder_class}>() {
+    
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ${ViewHolder_class}.from(parent)
+    
+    override fun getItemCount() = itemList.size
+    
+    override fun onBindViewHolder(holder: ${ViewHolder_class}, position: Int) =
+        holder.bind(itemList.elementAt(position))
+        
+    class ${ViewHolder_class} private constructor(private val binding: ${Binding_class}) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: ${Item_type}) {
+            // set binding variables if any...
+
+            /**
+             * causes the properties updates to execute immediately.
+             * since I'm calling [bind] from [onBindViewHolder]
+             * having the bindings execute immediately. as a practice
+             * can prevent the recycler view from having to perform
+             * extra calculations when it figures out how to display
+             * the list.
+             */
+            binding.executePendingBindings()
+        }
+        
+        companion object {
+            fun from(parent: ViewGroup) : ${ViewHolder_class} {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = ${Binding_class}.inflate(layoutInflater, parent, false)
+
+                return ${ViewHolder_class}(binding)
+            }
+        }
+    }
+}

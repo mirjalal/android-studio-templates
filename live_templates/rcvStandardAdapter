@@ -1,0 +1,34 @@
+class $adapter$(private val itemList: Collection<$listItemType$>) : androidx.recyclerview.widget.RecyclerView.Adapter<$adapter$.$viewHolder$>() {
+    
+    override fun onCreateViewHolder(parent: android.view.ViewGroup, viewType: Int) = $viewHolder$.from(parent)
+    
+    override fun getItemCount() = itemList.size
+    
+    override fun onBindViewHolder(holder: $viewHolder$, position: Int) =
+        holder.bind(itemList.elementAt(position))
+        
+    class $viewHolder$ private constructor(private val binding: $binding$) : androidx.recyclerview.widget.RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: $listItemType$) {
+            // set binding variables if any...
+
+            /**
+             * causes the properties updates to execute immediately.
+             * since I'm calling [bind] from [onBindViewHolder]
+             * having the bindings execute immediately. as a practice
+             * can prevent the recycler view from having to perform
+             * extra calculations when it figures out how to display
+             * the list.
+             */
+            binding.executePendingBindings()
+        }
+        
+        companion object {
+            fun from(parent: android.view.ViewGroup) : $viewHolder$ {
+                val layoutInflater = android.view.LayoutInflater.from(parent.context)
+                val binding = $binding$.inflate(layoutInflater, parent, false)
+
+                return $viewHolder$(binding)
+            }
+        }
+    }
+}
